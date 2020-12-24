@@ -58,9 +58,11 @@ public class Main {
         StringBuilder number16x = new StringBuilder();
 
         number16x.append("400000");
-        for (int i = number16x.length(); i < 16; i++) {
+        for (int i = number16x.length(); i < 15; i++) {
             number16x.append((int) (Math.random() * 9));
         }
+        number16x.append(luhnAlgo(number16x.toString()));
+
 
         StringBuilder password4x = new StringBuilder();
         for (int i = 0; i < 4; i++) {
@@ -70,6 +72,32 @@ public class Main {
         data.add(new User(password4x.toString(), number16x.toString()));
     }
 
+    public String luhnAlgo(String number) {
+        int sum1 = 0;
+        int sum2 = 0;
+        final int nDigits = number.length();
+        for (int i = nDigits; i > 0; i--) {
+            int digit = Character.getNumericValue(number.charAt(i - 1));
+            int z = digit;
+            int y = digit;
+            if (i % 2 != 0) {
+                z *= 2;
+                if (z > 9) {
+                    z -= 9;
+                }
+                sum1 += z;
+            } else sum2 += y;
+        }
+        int sum = sum1 + sum2;
+
+        for (int i = 0; i < 10; i++) {
+            if ((sum + i) % 10 == 0) {
+                return Integer.toString(i);
+            }
+        }
+
+        return "";
+    }
 
     public User logIntoAccount(String password, String cardNumber) {
 
