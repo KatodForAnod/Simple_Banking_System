@@ -7,7 +7,15 @@ import java.util.Scanner;
 
 public class Main {
     private List<User> data = new ArrayList<>();
+    private Database database;
 
+    public Main() {
+    }
+
+    public Main(Database database) {
+        this.database = database;
+        data = this.database.getUsers();
+    }
 
     public void menu() {
         while (true) {
@@ -70,6 +78,7 @@ public class Main {
         }
 
         data.add(new User(password4x.toString(), number16x.toString()));
+        database.addUser(new User(password4x.toString(), number16x.toString()));
     }
 
     public String luhnAlgo(String number) {
@@ -112,7 +121,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Database database = new DAO();
+
+        Main main = new Main(database);
         main.menu();
     }
 }

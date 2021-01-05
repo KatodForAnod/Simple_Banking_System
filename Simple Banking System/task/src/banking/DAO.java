@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAO implements Database {
-    private static String URL = "jdbc:postgresql://localhost:4444/2ndLab";
-    private static String USERNAME = "postgres";
-    private static String PASSWORD = "12345678";
+    private static final String URL = "jdbc:postgresql://localhost:4444/2ndLab";
+    private static final String USERNAME = "postgres";
+    private static final String PASSWORD = "12345678";
 
     private static Connection connection;
 
@@ -32,6 +32,7 @@ public class DAO implements Database {
 
         try {
             String sql;
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM card");
 
@@ -58,6 +59,7 @@ public class DAO implements Database {
     public boolean addUser(User user) {
         try {
             String sql;
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement stmt = connection.createStatement();
 
             sql = String.format("INSERT INTO card VALUES('%d', '%s', '%s','%d')"
